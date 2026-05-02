@@ -25,10 +25,20 @@ import {
   radiusTokens,
   shadowTokens,
   motionTokens,
+  navTokens,
   fontTokens,
   typeScale,
   componentSpecs,
+  cssUtilities,
+  spacingSystem,
+  breakpoints,
+  interactiveStates,
+  iconLibrary,
+  iconSizeGuide,
+  imageGuidelines,
+  dosAndDonts,
 } from "@/lib/styleGuide";
+import { BreathingStatement } from "@/components/ui/BreathingStatement";
 
 export const metadata = {
   title: "Style Guide — MDC Careers",
@@ -40,10 +50,15 @@ const sections = [
   { id: "overview", label: "Overview" },
   { id: "color", label: "Color" },
   { id: "typography", label: "Typography" },
-  { id: "spacing", label: "Radii & Shadows" },
+  { id: "spacing", label: "Spacing & Layout" },
+  { id: "radii", label: "Radii & Shadows" },
   { id: "motion", label: "Motion" },
+  { id: "interactive", label: "Interactive states" },
+  { id: "icons", label: "Icons" },
+  { id: "images", label: "Images" },
   { id: "components", label: "Components" },
   { id: "patterns", label: "Page patterns" },
+  { id: "dos-donts", label: "Do\u2019s & Don\u2019ts" },
   { id: "accessibility", label: "Accessibility" },
   { id: "maintenance", label: "Maintenance" },
 ];
@@ -138,9 +153,11 @@ export default function StyleGuidePage() {
             Color
           </h2>
           <p className="text-charcoal-light leading-relaxed mb-10 max-w-2xl">
-            The palette is blue-forward and editorial. Reach for{" "}
-            <code>charcoal</code> and <code>stone</code> first; layer{" "}
-            <code>mdc-blue</code> for accents and dramatic moments.
+            The palette is blue-forward with vibrant pops for personality.
+            Reach for <code>charcoal</code> and <code>stone</code> first;
+            use <code>mdc-blue</code> for brand moments; layer{" "}
+            <code>pop</code>, <code>pop-warm</code>, and <code>pop-mint</code>{" "}
+            sparingly for icons, dots, and interactive highlights.
           </p>
           <div className="space-y-12">
             {colorGroups.map((group) => (
@@ -212,8 +229,94 @@ export default function StyleGuidePage() {
           </div>
         </section>
 
-        {/* RADII & SHADOWS */}
+        {/* SPACING & LAYOUT */}
         <section id="spacing" className="scroll-mt-20">
+          <h2 className="font-sans font-bold text-3xl tracking-[-0.02em] mb-2">
+            Spacing & Layout
+          </h2>
+          <p className="text-charcoal-light leading-relaxed mb-10 max-w-2xl">
+            Base unit is {spacingSystem.baseUnit}. Every spacing value in the
+            system is a multiple of 4. Sections, cards, and gaps follow
+            predictable scales documented below.
+          </p>
+
+          <h3 className="font-heading text-xl text-charcoal mb-4">
+            Section padding
+          </h3>
+          <div className="border border-border rounded-radius-md divide-y divide-border mb-12">
+            {spacingSystem.sectionPadding.map((r) => (
+              <div key={r.label} className="flex flex-col sm:flex-row sm:items-center gap-2 p-4">
+                <span className="font-sans font-semibold text-sm text-charcoal w-32 shrink-0">{r.label}</span>
+                <code className="font-mono text-xs bg-stone px-2 py-1 rounded-radius-sm text-charcoal shrink-0">{r.value}</code>
+                <span className="text-sm text-charcoal-light">{r.usage}</span>
+              </div>
+            ))}
+          </div>
+
+          <h3 className="font-heading text-xl text-charcoal mb-4">
+            Container widths
+          </h3>
+          <div className="border border-border rounded-radius-md divide-y divide-border mb-12">
+            {spacingSystem.containerWidths.map((r) => (
+              <div key={r.label} className="flex flex-col sm:flex-row sm:items-center gap-2 p-4">
+                <span className="font-sans font-semibold text-sm text-charcoal w-32 shrink-0">{r.label}</span>
+                <code className="font-mono text-xs bg-stone px-2 py-1 rounded-radius-sm text-charcoal shrink-0">{r.value}</code>
+                <span className="text-sm text-charcoal-light">{r.usage}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            <div>
+              <h3 className="font-heading text-xl text-charcoal mb-4">Card padding</h3>
+              <div className="border border-border rounded-radius-md divide-y divide-border">
+                {spacingSystem.cardPadding.map((r) => (
+                  <div key={r.label} className="p-4">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="font-sans font-semibold text-sm text-charcoal">{r.label}</span>
+                      <code className="font-mono text-xs bg-stone px-2 py-0.5 rounded-radius-sm text-charcoal">{r.value}</code>
+                    </div>
+                    <p className="text-sm text-charcoal-light">{r.usage}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h3 className="font-heading text-xl text-charcoal mb-4">Grid gaps</h3>
+              <div className="border border-border rounded-radius-md divide-y divide-border">
+                {spacingSystem.gaps.map((r) => (
+                  <div key={r.label} className="p-4">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="font-sans font-semibold text-sm text-charcoal">{r.label}</span>
+                      <code className="font-mono text-xs bg-stone px-2 py-0.5 rounded-radius-sm text-charcoal">{r.value}</code>
+                    </div>
+                    <p className="text-sm text-charcoal-light">{r.usage}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <h3 className="font-heading text-xl text-charcoal mb-4 mt-12">
+            Responsive breakpoints
+          </h3>
+          <p className="text-sm text-charcoal-light leading-relaxed mb-4 max-w-2xl">
+            Tailwind 4 defaults. Design mobile-first, override at <code>md:</code> and <code>lg:</code>.
+            The <code>xl:</code> breakpoint is intentionally unused — content caps at 1200px.
+          </p>
+          <div className="border border-border rounded-radius-md divide-y divide-border">
+            {breakpoints.map((b) => (
+              <div key={b.name} className="flex flex-col sm:flex-row sm:items-center gap-2 p-4">
+                <code className="font-mono text-xs bg-stone px-2 py-1 rounded-radius-sm text-charcoal w-16 shrink-0 text-center">{b.name}:</code>
+                <span className="font-sans font-semibold text-sm text-charcoal w-20 shrink-0">{b.value}</span>
+                <span className="text-sm text-charcoal-light">{b.usage}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* RADII & SHADOWS */}
+        <section id="radii" className="scroll-mt-20">
           <h2 className="font-sans font-bold text-3xl tracking-[-0.02em] mb-10">
             Radii & Shadows
           </h2>
@@ -264,9 +367,103 @@ export default function StyleGuidePage() {
             <code>ScrollReveal</code> for content that enters on scroll and
             stagger groups with <code>delay</code> increments of 0.05–0.15s.
           </p>
-          <div className="border border-border rounded-radius-md px-4">
+          <div className="border border-border rounded-radius-md px-4 mb-12">
             {motionTokens.map((t) => (
               <TokenRow key={t.name} {...t} />
+            ))}
+          </div>
+
+          <h3 className="font-heading text-xl text-charcoal mb-4">Navigation</h3>
+          <div className="border border-border rounded-radius-md px-4">
+            {navTokens.map((t) => (
+              <TokenRow key={t.name} {...t} />
+            ))}
+          </div>
+        </section>
+
+        {/* INTERACTIVE STATES */}
+        <section id="interactive" className="scroll-mt-20">
+          <h2 className="font-sans font-bold text-3xl tracking-[-0.02em] mb-2">
+            Interactive States
+          </h2>
+          <p className="text-charcoal-light leading-relaxed mb-10 max-w-2xl">
+            Every interactive element has documented hover, focus, and active
+            states. Consistency here is what separates polished from
+            &ldquo;just works.&rdquo;
+          </p>
+          <div className="space-y-6">
+            {interactiveStates.map((el) => (
+              <div key={el.element} className="border border-border rounded-radius-md overflow-hidden">
+                <div className="bg-stone px-5 py-3 border-b border-border">
+                  <h3 className="font-sans font-semibold text-sm text-charcoal">{el.element}</h3>
+                </div>
+                <div className="divide-y divide-border">
+                  {el.states.map((s) => (
+                    <div key={s.state} className="flex flex-col sm:flex-row gap-2 sm:gap-4 px-5 py-3">
+                      <span className="font-mono text-xs bg-stone px-2 py-0.5 rounded-radius-sm text-charcoal w-20 shrink-0 text-center self-start">
+                        {s.state}
+                      </span>
+                      <span className="text-sm text-charcoal-light">{s.behavior}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ICONS */}
+        <section id="icons" className="scroll-mt-20">
+          <h2 className="font-sans font-bold text-3xl tracking-[-0.02em] mb-2">
+            Icon Library
+          </h2>
+          <p className="text-charcoal-light leading-relaxed mb-10 max-w-2xl">
+            All icons come from{" "}
+            <a href="https://lucide.dev" target="_blank" rel="noopener noreferrer" className="text-accent hover:text-accent-hover font-medium">
+              Lucide React
+            </a>
+            . Import from <code>lucide-react</code>. Use the size guide below —
+            don&apos;t freestyle icon sizes.
+          </p>
+
+          <h3 className="font-heading text-xl text-charcoal mb-4">Size guide</h3>
+          <div className="border border-border rounded-radius-md divide-y divide-border mb-12">
+            {iconSizeGuide.map((s) => (
+              <div key={s.size} className="flex flex-col sm:flex-row sm:items-center gap-2 p-4">
+                <code className="font-mono text-xs bg-stone px-2 py-1 rounded-radius-sm text-charcoal w-24 shrink-0 text-center">{s.size}</code>
+                <span className="text-sm text-charcoal-light">{s.usage}</span>
+              </div>
+            ))}
+          </div>
+
+          <h3 className="font-heading text-xl text-charcoal mb-4">Icons in use</h3>
+          <div className="border border-border rounded-radius-md divide-y divide-border">
+            {iconLibrary.map((icon) => (
+              <div key={icon.name} className="flex flex-col sm:flex-row sm:items-center gap-2 p-4">
+                <code className="font-mono text-xs text-charcoal w-48 shrink-0">{icon.name}</code>
+                <span className="font-mono text-xs text-charcoal-light w-20 shrink-0">{icon.sizes}px</span>
+                <span className="text-sm text-charcoal-light">{icon.usage}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* IMAGES */}
+        <section id="images" className="scroll-mt-20">
+          <h2 className="font-sans font-bold text-3xl tracking-[-0.02em] mb-2">
+            Image Guidelines
+          </h2>
+          <p className="text-charcoal-light leading-relaxed mb-10 max-w-2xl">
+            Rules for photography, aspect ratios, overlays, and placeholder
+            strategy. The prototype uses YouTube thumbnails — these must be
+            replaced with original MDC photography before production.
+          </p>
+          <div className="border border-border rounded-radius-md divide-y divide-border">
+            {imageGuidelines.map((g) => (
+              <div key={g.label} className="p-5">
+                <h3 className="font-sans font-semibold text-sm text-charcoal mb-1">{g.label}</h3>
+                <p className="text-sm text-charcoal-light leading-relaxed">{g.description}</p>
+              </div>
             ))}
           </div>
         </section>
@@ -297,9 +494,14 @@ export default function StyleGuidePage() {
               <CTAButton label="White" href="#" variant="white" />
               <CTAButton label="Outline" href="#" variant="outline" />
             </div>
-            <div className="mt-6 p-6 -mx-6 -mb-6 bg-charcoal flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-4 items-center mt-4 pt-4 border-t border-border">
+              <CTAButton label="Text link" href="#" variant="link" />
+              <CTAButton label="External link" href="https://example.com" variant="link" external />
+            </div>
+            <div className="mt-6 p-6 -mx-6 -mb-6 bg-charcoal flex flex-wrap gap-4 items-center">
               <CTAButton label="Outline-light" href="#" variant="outline-light" />
-              <CTAButton label="External" href="https://example.com" variant="white" external />
+              <CTAButton label="White" href="https://example.com" variant="white" external />
+              <CTAButton label="Light link" href="#" variant="link-light" />
             </div>
           </Showcase>
           <ComponentBySpec name="CTAButton" />
@@ -518,6 +720,36 @@ export default function StyleGuidePage() {
             </div>
           </Showcase>
           <ComponentBySpec name="TestimonialCard" />
+
+          {/* BreathingStatement */}
+          <Showcase
+            title="BreathingStatement"
+            description="Large centered text to create rhythm between dense sections. Includes a subtle gradient orb."
+            code={`<BreathingStatement text="167 countries. One team. One mission." theme="dark" />`}
+          >
+            <BreathingStatement text="167 countries. One team. One mission." />
+          </Showcase>
+          <ComponentBySpec name="BreathingStatement" />
+
+          {/* CSS Utilities */}
+          <div>
+            <h3 className="font-sans font-bold text-2xl tracking-[-0.02em] mb-2 mt-12">
+              CSS Utilities
+            </h3>
+            <p className="text-charcoal-light leading-relaxed mb-6 max-w-2xl">
+              Global utility classes defined in <code>globals.css</code>. Apply directly via className.
+            </p>
+            <div className="border border-border rounded-radius-md divide-y divide-border">
+              {cssUtilities.map((u) => (
+                <div key={u.name} className="flex items-start gap-4 p-4">
+                  <code className="font-mono text-xs bg-stone px-2 py-1 rounded-radius-sm text-charcoal shrink-0">
+                    .{u.name}
+                  </code>
+                  <p className="text-sm text-charcoal-light">{u.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </section>
 
         {/* PAGE PATTERNS */}
@@ -586,6 +818,49 @@ export default function StyleGuidePage() {
             <ComponentBySpec name="ImageCardCarousel" />
             <ComponentBySpec name="ScrollReveal" />
           </div>
+        </section>
+
+        {/* DO'S AND DON'TS */}
+        <section id="dos-donts" className="scroll-mt-20">
+          <h2 className="font-sans font-bold text-3xl tracking-[-0.02em] mb-2">
+            Do&apos;s & Don&apos;ts
+          </h2>
+          <p className="text-charcoal-light leading-relaxed mb-10 max-w-2xl">
+            Quick-reference rules to prevent design drift. When in doubt, check
+            here before improvising.
+          </p>
+          {(() => {
+            const categories = [...new Set(dosAndDonts.map((d) => d.category))];
+            return (
+              <div className="space-y-8">
+                {categories.map((cat) => (
+                  <div key={cat}>
+                    <h3 className="font-heading text-xl text-charcoal mb-4">{cat}</h3>
+                    <div className="space-y-3">
+                      {dosAndDonts
+                        .filter((d) => d.category === cat)
+                        .map((d, i) => (
+                          <div key={i} className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div className="border border-pop-mint/30 bg-pop-mint/[0.04] rounded-radius-md p-4">
+                              <span className="inline-block font-mono text-xs font-semibold text-pop-mint bg-pop-mint/[0.12] px-2 py-0.5 rounded-radius-sm mb-2">
+                                DO
+                              </span>
+                              <p className="text-sm text-charcoal leading-relaxed">{d.do}</p>
+                            </div>
+                            <div className="border border-pop-warm/30 bg-pop-warm/[0.04] rounded-radius-md p-4">
+                              <span className="inline-block font-mono text-xs font-semibold text-pop-warm bg-pop-warm/[0.12] px-2 py-0.5 rounded-radius-sm mb-2">
+                                DON&apos;T
+                              </span>
+                              <p className="text-sm text-charcoal leading-relaxed">{d.dont}</p>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            );
+          })()}
         </section>
 
         {/* ACCESSIBILITY */}

@@ -21,22 +21,22 @@ export function SectionTitle({
 
   return (
     <ScrollReveal
-      className={`mb-12 md:mb-16 ${align === "center" ? "text-center" : ""}`}
+      className={`mb-16 md:mb-20 ${align === "center" ? "text-center" : ""}`}
     >
       {badge && (
-        <p className="text-xs font-medium uppercase tracking-[0.1em] text-charcoal-light mb-4">
+        <p className="text-xs font-medium uppercase tracking-[0.12em] text-charcoal-light mb-5">
           {badge}
         </p>
       )}
       <h2
-        className={`font-sans font-bold tracking-[-0.02em] leading-[1.1] mb-4 ${textColor}`}
-        style={{ fontSize: "clamp(1.75rem, 3vw + 0.5rem, 3rem)" }}
+        className={`font-sans font-bold tracking-[-0.03em] leading-[1.05] mb-5 ${textColor}`}
+        style={{ fontSize: "clamp(2rem, 3.5vw + 0.5rem, 3.5rem)" }}
       >
         {title}
       </h2>
       {subtitle && (
         <p
-          className={`${subtitleColor} text-lg max-w-2xl leading-relaxed tracking-[-0.01em] ${
+          className={`${subtitleColor} text-lg max-w-2xl leading-[1.6] tracking-[-0.01em] ${
             align === "center" ? "mx-auto" : ""
           }`}
         >

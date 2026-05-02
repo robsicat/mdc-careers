@@ -4,7 +4,7 @@ import { ArrowRight, ExternalLink } from "lucide-react";
 interface CTAButtonProps {
   label: string;
   href: string;
-  variant?: "accent" | "white" | "dark" | "outline" | "outline-light";
+  variant?: "accent" | "white" | "dark" | "outline" | "outline-light" | "link" | "link-light";
   external?: boolean;
   className?: string;
   showArrow?: boolean;
@@ -18,8 +18,11 @@ export function CTAButton({
   className = "",
   showArrow = false,
 }: CTAButtonProps) {
-  const baseClasses =
-    "inline-flex items-center gap-2 font-medium text-[15px] transition-all duration-[var(--duration-fast)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent";
+  const isLink = variant === "link" || variant === "link-light";
+
+  const baseClasses = isLink
+    ? "inline-flex items-center gap-1.5 font-medium text-[15px] transition-all duration-[var(--duration-fast)] focus:outline-none group"
+    : "inline-flex items-center gap-2 font-medium text-[15px] transition-all duration-[var(--duration-fast)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent";
 
   const variantClasses = {
     accent:
@@ -32,17 +35,21 @@ export function CTAButton({
       "px-6 py-3 rounded-full border border-border text-charcoal hover:bg-charcoal/5 hover:border-border-hover",
     "outline-light":
       "px-6 py-3 rounded-full border border-white/30 text-white hover:bg-white/10 hover:border-white/50",
+    link:
+      "text-charcoal hover:text-charcoal/70",
+    "link-light":
+      "text-white/80 hover:text-white",
   };
 
   const classes = `${baseClasses} ${variantClasses[variant]} ${className}`;
 
   const icon = external ? (
     <>
-      <ExternalLink size={14} className="opacity-70" />
+      <ExternalLink size={14} className={isLink ? "opacity-50" : "opacity-70"} />
       <span className="sr-only"> (opens in new tab)</span>
     </>
-  ) : showArrow ? (
-    <ArrowRight size={14} />
+  ) : showArrow || isLink ? (
+    <ArrowRight size={14} className={isLink ? "transition-transform group-hover:translate-x-0.5" : ""} />
   ) : null;
 
   if (external) {

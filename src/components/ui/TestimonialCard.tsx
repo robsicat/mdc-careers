@@ -20,55 +20,43 @@ export function TestimonialCard({
   return (
     <ScrollReveal delay={delay} className="h-full">
       <article
-        className={`h-full flex flex-col rounded-radius-lg overflow-hidden shadow-md ${
-          isAccent ? "bg-accent" : "bg-white"
+        className={`card-3d h-full flex flex-col justify-between p-7 md:p-9 rounded-radius-lg ${
+          isAccent
+            ? "bg-mdc-blue text-white"
+            : "bg-white border border-border"
         }`}
       >
-        {/* Photo placeholder — neutral gradient */}
-        <div
-          className={`h-72 relative ${
-            isAccent
-              ? "bg-gradient-to-br from-accent/80 to-navy"
-              : "bg-gradient-to-br from-stone-dark to-charcoal/10"
-          }`}
-        >
-          <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-        </div>
-
-        {/* Quote card overlay */}
-        <div
-          className={`p-5 -mt-4 mx-3 relative z-10 rounded-radius-sm ${
-            isAccent ? "bg-accent text-white" : "bg-white text-charcoal"
-          }`}
-        >
+        <div>
+          {/* Quote mark with accent color */}
+          <div className={`text-4xl leading-none mb-5 font-heading ${isAccent ? "text-white/20" : "text-pop/30"}`}>
+            &ldquo;
+          </div>
           <blockquote>
             <p
-              className={`font-heading text-base leading-[1.45] tracking-[-0.01em] mb-4 ${
-                isAccent ? "text-white" : "text-charcoal"
+              className={`text-[15px] leading-[1.7] tracking-[-0.01em] mb-8 ${
+                isAccent ? "text-white/85" : "text-charcoal"
               }`}
             >
-              &ldquo;{quote}&rdquo;
+              {quote}
             </p>
           </blockquote>
-          <footer className="space-y-0.5">
-            <cite
-              className={`not-italic font-medium text-sm block ${
-                isAccent ? "text-white" : "text-charcoal"
-              }`}
-            >
-              {name}
-            </cite>
-            <span
-              className={`text-xs block ${
-                isAccent ? "text-white/70" : "text-charcoal-light"
-              }`}
-            >
-              {role}
-            </span>
-          </footer>
         </div>
-
-        <div className="pb-4" />
+        <footer className={`pt-5 border-t ${isAccent ? "border-white/10" : "border-border"}`}>
+          <cite
+            className={`not-italic font-medium text-sm block ${
+              isAccent ? "text-white" : "text-charcoal"
+            }`}
+          >
+            {name}
+          </cite>
+          <span
+            className={`text-[13px] block mt-0.5 ${
+              isAccent ? "text-white/50" : "text-charcoal-light"
+            }`}
+          >
+            {role}
+          </span>
+        </footer>
       </article>
     </ScrollReveal>
   );

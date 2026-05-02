@@ -27,45 +27,45 @@ export function Card({
 
   const content = (
     <div
-      className={`rounded-radius-lg p-6 md:p-8 h-full border transition-all duration-[var(--duration-fast)] ${
+      className={`card-3d p-7 md:p-9 h-full transition-all duration-300 ${
         isDark
-          ? "bg-navy-light border-navy-border hover:border-warm-muted/20"
-          : "bg-white border-border hover:border-border-hover"
-      } ${href ? "hover:-translate-y-0.5 hover:shadow-md cursor-pointer" : ""}`}
+          ? "bg-navy-light rounded-radius-lg border border-navy-border hover:border-white/10"
+          : "bg-white rounded-radius-lg border border-transparent hover:border-border"
+      } ${href ? "cursor-pointer group" : ""}`}
     >
       {Icon && (
         <div
-          className={`w-10 h-10 rounded-radius-sm flex items-center justify-center mb-5 ${
-            isDark ? "bg-accent/15" : "bg-charcoal/5"
+          className={`w-11 h-11 rounded-radius-md flex items-center justify-center mb-6 ${
+            isDark ? "bg-white/[0.06]" : "bg-pop/[0.08]"
           }`}
         >
           <Icon
-            size={20}
-            className={isDark ? "text-accent" : "text-charcoal"}
+            size={18}
+            className={isDark ? "text-white/60" : "text-pop"}
           />
         </div>
       )}
       <h3
-        className={`font-heading font-medium text-xl leading-[1.2] tracking-[-0.01em] mb-2 ${
+        className={`font-sans font-semibold text-lg leading-[1.2] tracking-[-0.02em] mb-3 ${
           isDark ? "text-white" : "text-charcoal"
         }`}
       >
         {title}
       </h3>
       <p
-        className={`text-sm leading-[1.6] tracking-[0.01em] ${
-          isDark ? "text-warm-gray" : "text-charcoal-light"
+        className={`text-[15px] leading-[1.65] ${
+          isDark ? "text-white/50" : "text-charcoal-light"
         }`}
       >
         {description}
       </p>
       {href && (
         <div
-          className={`mt-4 flex items-center gap-1 text-sm font-medium ${
-            isDark ? "text-accent" : "text-charcoal"
-          }`}
+          className={`mt-6 flex items-center gap-1.5 text-[13px] font-medium ${
+            isDark ? "text-white/40 group-hover:text-white/70" : "text-pop group-hover:text-pop/80"
+          } transition-colors`}
         >
-          Learn more <ArrowRight size={14} />
+          Learn more <ArrowRight size={13} className="transition-transform group-hover:translate-x-0.5" />
         </div>
       )}
       {children}

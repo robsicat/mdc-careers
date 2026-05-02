@@ -18,14 +18,12 @@ interface CollageHeroProps {
   images: CollageImage[];
 }
 
-/* Each image gets a width and vertical inset to create the stagger effect */
 const widthClass = {
   narrow: "w-[130px] md:w-[160px] lg:w-[192px]",
   medium: "w-[155px] md:w-[192px] lg:w-[240px]",
   wide: "w-[170px] md:w-[210px] lg:w-[260px]",
 };
 
-/* Vertical insets: padding top / bottom to position image within the fixed-height strip */
 const insetStyle: Record<string, { paddingTop: string; paddingBottom: string }> = {
   top: { paddingTop: "10px", paddingBottom: "90px" },
   high: { paddingTop: "40px", paddingBottom: "60px" },
@@ -40,44 +38,43 @@ export function CollageHero({
   children,
   images,
 }: CollageHeroProps) {
-  // Triple images for seamless loop
   const strip = [...images, ...images, ...images];
 
   return (
-    <section className="relative bg-mdc-blue-light overflow-hidden">
+    <section className="relative bg-charcoal overflow-hidden min-h-screen flex flex-col">
       {/* Text content — centered */}
-      <div className="relative z-10 pt-20 md:pt-28 lg:pt-32 pb-10 md:pb-14 px-8 text-center">
+      <div className="relative z-10 pt-32 md:pt-40 lg:pt-48 pb-12 md:pb-16 px-8 text-center flex-1 flex flex-col justify-center">
         {badge && (
           <motion.p
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="text-charcoal-light text-sm font-sans tracking-wide mb-5"
+            className="text-white/30 text-[13px] font-medium tracking-[0.15em] uppercase mb-6"
           >
             {badge}
           </motion.p>
         )}
 
         <motion.h1
-          initial={{ opacity: 0, y: 25 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="font-sans font-bold text-charcoal leading-[1.05] tracking-[-0.03em] mx-auto max-w-3xl"
-          style={{ fontSize: "clamp(2.75rem, 5vw + 1rem, 5rem)" }}
+          className="font-sans font-bold leading-[0.95] tracking-[-0.05em] mx-auto max-w-4xl text-gradient bg-gradient-to-br from-white via-white to-white/50"
+          style={{ fontSize: "clamp(3.5rem, 8vw + 1rem, 7rem)" }}
         >
           {headline}
         </motion.h1>
 
         {subtitle && (
           <motion.p
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
-              duration: 0.6,
+              duration: 0.5,
               delay: 0.12,
               ease: [0.16, 1, 0.3, 1],
             }}
-            className="text-charcoal-light text-base md:text-lg max-w-xl mx-auto leading-relaxed tracking-[-0.01em] mt-5"
+            className="text-white/40 text-base md:text-lg max-w-lg mx-auto leading-[1.6] tracking-[-0.01em] mt-7"
           >
             {subtitle}
           </motion.p>
@@ -85,14 +82,14 @@ export function CollageHero({
 
         {children && (
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
-              duration: 0.6,
-              delay: 0.25,
+              duration: 0.5,
+              delay: 0.22,
               ease: [0.16, 1, 0.3, 1],
             }}
-            className="flex flex-wrap justify-center gap-3 mt-8"
+            className="flex flex-wrap justify-center gap-3 mt-10"
           >
             {children}
           </motion.div>
@@ -101,10 +98,10 @@ export function CollageHero({
 
       {/* Image marquee ribbon */}
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.3 }}
-        className="relative h-[240px] md:h-[320px] lg:h-[400px] mb-12 md:mb-16 lg:mb-20 overflow-hidden"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+        className="relative h-[200px] md:h-[280px] lg:h-[360px] pb-8 md:pb-12 overflow-hidden"
       >
         <div className="absolute inset-0 flex items-stretch gap-3 md:gap-4 animate-marquee">
           {strip.map((img, i) => (
@@ -124,6 +121,9 @@ export function CollageHero({
             </div>
           ))}
         </div>
+        {/* Fade edges */}
+        <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-charcoal to-transparent z-10" />
+        <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-charcoal to-transparent z-10" />
       </motion.div>
     </section>
   );
